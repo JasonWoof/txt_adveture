@@ -6,14 +6,14 @@ word = "yes"
 
 def esc() :
     global room
-    print "you escaped the dungon you get 50 points"
+    print("you escaped the dungon you get 50 points")
     room = outside
 def change_room() :
     global room
-    print "you go outside"
+    print("you go outside")
     room = outside
 def attack() :
-    print "you do some damage"
+    print("you do some damage")
 souls = {
     "jump": "you jumped " + str(random.randint(6,20)) + " inches"
 }
@@ -27,8 +27,7 @@ dungeon = {
 
 outside = {
     "commands": {
-             
-
+        "attack": attack
     },
     "description": "you are now in a forest"
 }
@@ -36,16 +35,16 @@ outside = {
 room = dungeon
 
 while True:    
-    print room["description"]
+    print(room["description"])
     command = sys.stdin.readline().strip()
     words = command.split(' ')
     verb = words[0]
     if verb in souls:
-        print souls[verb]
+        print(souls[verb])
     elif verb in room["commands"]:
         room["commands"][verb]()
     else:
-        print "you said " + command
+        print("you said " + command)
 
 # print random.random()
 
