@@ -22,20 +22,30 @@ dungeon = {
         "esc": esc,
         "change": change_room
     },
-    "description": "you are in a dungeon you have a broadsword a derk and some armor what do you do"
+    "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do",
+    "inventory": [
+        "ladder",
+        "rats",
+        "rusty old sword"
+    ]
 }
 
 outside = {
     "commands": {
         "attack": attack
     },
-    "description": "you are now in a forest"
+    "description": "you are now in a forest",
+    "inventory": [
+        "scary monster"
+    ]
 }
 
 room = dungeon
 
-while True:    
+while True:
+    print()
     print(room["description"])
+    print("things you see here: " + ", ".join(room["inventory"]))
     command = sys.stdin.readline().strip()
     words = command.split(' ')
     verb = words[0]
