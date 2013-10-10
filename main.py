@@ -6,7 +6,7 @@ word = "yes"
 
 def esc() :
     global room
-    print("you escaped the dungon you get 50 points")
+    print("you escaped the dungeon you get 50 points")
     room = outside
 def change_room() :
     global room
@@ -22,7 +22,7 @@ dungeon = {
         "esc": esc,
         "change": change_room
     },
-    "description": "you are in a dungeon you have a broadsword a dierk and some armor what do you do"
+    "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do"
 }
 
 outside = {
@@ -34,6 +34,17 @@ outside = {
 
 room = dungeon
 
+sass = [
+    "Whatchoo talkin' 'bout, foo?",
+    "Speak English, child!",
+    "Shut up!",
+    "Huh??",
+    "How about no.",
+    "How about I {0} your face!",
+    "That's not my job, I'm just the narrator!",
+    "That ain't right!"
+]
+
 while True:    
     print(room["description"])
     command = sys.stdin.readline().strip()
@@ -44,7 +55,9 @@ while True:
     elif verb in room["commands"]:
         room["commands"][verb]()
     else:
-        print("you said " + command)
+        s = sass[random.randint(0, len(sass) - 1)]
+        s = s.format (command)
+        print(command + "? " + s)
 
 # print random.random()
 
