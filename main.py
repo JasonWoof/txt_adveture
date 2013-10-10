@@ -6,7 +6,7 @@ word = "yes"
 
 def esc() :
     global room
-    print("you escaped the dungon you get 50 points")
+    print("you escaped the dungeon you get 50 points71819")
     room = outside
 def change_room() :
     global room
@@ -22,7 +22,7 @@ dungeon = {
         "esc": esc,
         "change": change_room
     },
-    "description": "you are in a dungeon you have a broadsword a dierk and some armor what do you do"
+    "description": "you are in a dungeon you have a broadsword a derk and some armor what do you do"
 }
 
 outside = {
