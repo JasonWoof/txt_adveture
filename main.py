@@ -24,6 +24,8 @@ def kill() :
             item["hp"] = item["hp"] - dam
             if item["hp"] < 1 :
                 print("the monster dies")
+                del item["hp"]
+                item["name"] = "corpse of " + item["name"] 
             else :
                 print("you hit for {0} hp".format(dam))
                 if random.randint(1,100) > 25:
