@@ -17,6 +17,21 @@ def attack() :
 souls = {
     "jump": "you jumped " + str(random.randint(6,20)) + " inches"
 }
+def kill() :
+    for item in room["inventory"] :
+        if "hp" in item :
+            item["hp"] = item["hp"] - 50
+            if item["hp"] < 1 :
+                print("the monster dies")
+            else :
+                print("you hit for 50 hp")
+            return
+    print("nothing to kill here")
+    
+commands = {
+    "kill": kill,
+}
+
 dungeon = {
     "commands": {
         "esc": esc,
@@ -24,9 +39,9 @@ dungeon = {
     },
     "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do",
     "inventory": [
-        "ladder",
-        "rats",
-        "rusty old sword"
+        { "name": "ladder" },
+        { "name": "rats"},
+        { "name": "rusty old sword"}
     ]
 }
 
@@ -36,7 +51,7 @@ outside = {
     },
     "description": "you are now in a forest",
     "inventory": [
-        "scary monster"
+        { "name": "scary monster", "hp": 120 }
     ]
 }
 
@@ -56,14 +71,19 @@ sass = [
 while True:
     print()
     print(room["description"])
-    print("things you see here: " + ", ".join(room["inventory"]))
+    stuff = []
+    for item in room["inventory"] :
+        stuff.append(item["name"])
+    print("things you see here: " + ", ".join(stuff))
     command = sys.stdin.readline().strip()
     words = command.split(' ')
     verb = words[0]
-    if verb in souls:
-        print(souls[verb])
-    elif verb in room["commands"]:
+    if verb in room["commands"]:
         room["commands"][verb]()
+    elif verb in commands:
+        commands[verb]()
+    elif verb in souls:
+        print(souls[verb])
     else:
         s = sass[random.randint(0, len(sass) - 1)]
         s = s.format (command)
