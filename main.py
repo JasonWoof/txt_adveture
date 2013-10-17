@@ -23,6 +23,8 @@ def kill() :
             item["hp"] = item["hp"] - 50
             if item["hp"] < 1 :
                 print("the monster dies")
+                del item["hp"]
+                item["name"] = "corpse of " + item["name"] 
             else :
                 print("you hit for 50 hp")
             return
