@@ -25,6 +25,10 @@ def kill() :
                 print("the monster dies")
             else :
                 print("you hit for 50 hp")
+                if random.randint(1,100) > 25:
+                    print("u got your *** kicked")
+                else:
+                    print("that dumb *** monster missed")
             return
     print("nothing to kill here")
     
