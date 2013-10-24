@@ -33,9 +33,15 @@ def kill() :
                 print ("you mised")
             if "hp" in item: #if he's still alive
                 if random.randint(1,100) > 25:
-                    print("u got your *** kicked")
+                    dam = random.randint(50,100)
+                    fred["hp"] = fred["hp"] - dam
+                    if fred["hp"] < 1 :
+                        print("you die")
+                        exit ()
+                    else :
+                        print("the {0} hits you for {1} hp".format(item["name"], dam))
                 else:
-                    print("that dumb *** monster missed")
+                    print("the {0} misses".format (item["name"]))
             return
     print("nothing to kill here")
     
@@ -51,10 +57,11 @@ dungeon = {
     "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do",
     "inventory": [
         { "name": "ladder" },
-        { "name": "rats"},
-        { "name": "rusty old sword"}
+        { "name": "rusty old sword"},
+        { "name": "rats", "hp": 50 }
     ]
 }
+fred = { "name": "fred", "hp": 120 }
 
 outside = {
     "commands": {
