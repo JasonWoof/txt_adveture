@@ -14,6 +14,11 @@ def change_room() :
     room = outside
 def attack() :
     print("you do some damage")
+def climb () :
+    global room
+    print("you climbed out of the dungeon")
+    room = outside
+    
 souls = {
     "jump": "you jumped " + str(random.randint(6,20)) + " inches"
 }
@@ -51,7 +56,8 @@ commands = {
 dungeon = {
     "commands": {
         "esc": esc,
-        "change": change_room
+        "change": change_room,
+        "climb": climb
     },
     "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do",
     "inventory": [
