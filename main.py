@@ -20,13 +20,18 @@ souls = {
 def kill() :
     for item in room["inventory"] :
         if "hp" in item :
-            item["hp"] = item["hp"] - 50
+            dam = random.randint(20,85)
+            item["hp"] = item["hp"] - dam
             if item["hp"] < 1 :
                 print("the monster dies")
                 del item["hp"]
                 item["name"] = "corpse of " + item["name"] 
             else :
-                print("you hit for 50 hp")
+                print("you hit for {0} hp".format(dam))
+                if random.randint(1,100) > 25:
+                    print("u got your *** kicked")
+                else:
+                    print("that dumb *** monster missed")
             return
     print("nothing to kill here")
     
