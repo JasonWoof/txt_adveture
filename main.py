@@ -23,23 +23,22 @@ def kill() :
             if 70 < random.randint (1,100):
                 dam = random.randint(50,100)
                 item["hp"] = item["hp"] - dam
+                print("you hit the {0} for {1} hp".format(item["name"],dam))
                 if item["hp"] < 1 :
-                    print("the monster dies")
+                    print("the {0} dies".format (item ["name"]))
                     del item["hp"]
-                    item["name"] = "corpse of " + item["name"] 
-                else :
-                    print("you hit for {0} hp".format(dam))
+                    item["name"] = "corpse of " + item["name"]
+
             else:
                 print ("you mised")
             if "hp" in item: #if he's still alive
                 if random.randint(1,100) > 25:
                     dam = random.randint(50,100)
                     fred["hp"] = fred["hp"] - dam
+                    print("the {0} hits you for {1} hp".format(item["name"], dam))
                     if fred["hp"] < 1 :
                         print("you die")
                         exit ()
-                    else :
-                        print("the {0} hits you for {1} hp".format(item["name"], dam))
                 else:
                     print("the {0} misses".format (item["name"]))
             return
