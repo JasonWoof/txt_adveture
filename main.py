@@ -31,7 +31,8 @@ def swing (attacker, defender) :
     else:
         print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
 def get (words) :
-    thing = words[1]
+    words.pop(0)
+    thing = " ".join(words)
     for idx,item in enumerate (room["inventory"]) :
         if thing == item["name"] :
             if "hp" in item :
