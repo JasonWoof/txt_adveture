@@ -19,42 +19,43 @@ def climb (words) :
     global room
     print("you climbed out of the dungeon")
     change_room (outside)
+def swing (attacker, defender) :
+    if 70 < random.randint (1,100):
+        dam = random.randint(attacker ["power"] /2, attacker ["power"])
+        defender["hp"] = defender["hp"] - dam
+        print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
+        if defender["hp"] < 1 :
+            print("the {0} dies".format (defender ["name"]))
+            del defender["hp"]
+            defender["name"] = "corpse of " + defender["name"]
+    else:
+        print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
 def get (words) :
     thing = words[1]
-    for item in room["inventory"] :
+    for idx,item in enumerate (room["inventory"]) :
         if thing == item["name"] :
-            fred ["inventory"].append(item)
+            if "hp" in item :
+                print ("the {0} does not want to be picked up".format(item["name"]) )
+                swing (item, fred)
+            else:
+                fred ["inventory"].append(item)
+                del room["inventory"] [idx]
+                return 
 def enter_dungeon () :
-    dungeon ["inventory"].append ({ "name": "rats", "hp": 50, "power": 50})
+    dungeon ["inventory"].append ({ "name": "rats","article": "the ", "hp": 50, "power": 50})
 def kill(words) :
-    global room
     for item in room["inventory"] :
         if "hp" in item :
-            if 70 < random.randint (1,100):
-                dam = random.randint(fred ["power"] /2, fred ["power"])
-                item["hp"] = item["hp"] - dam
-                print("you hit the {0} for {1} hp".format(item["name"],dam))
-                if item["hp"] < 1 :
-                    print("the {0} dies".format (item ["name"]))
-                    del item["hp"]
-                    item["name"] = "corpse of " + item["name"]
-
-            else:
-                print ("you missed")
+            swing(fred, item)
             if "hp" in item: #if he's still alive
-                if random.randint(1,100) > 25:
-                    dam = random.randint(item ["power"] /2, item ["power"])
-                    fred["hp"] = fred["hp"] - dam
-                    print("the {0} hits you for {1} hp".format(item["name"], dam))
-                    if fred["hp"] < 1 :
-                        print("you die")
-                        exit ()
-                    else:
-                        if room == outside and random.randint(1,100) > 25:
-                            print (" the blow knocks you back and you fall back in the dungeon")
-                            change_room (dungeon)
-                else:
-                    print("the {0} misses".format (item["name"]))
+                swing(item, fred)
+                if fred["hp"] < 1 :
+                    print("you die")
+                    exit ()
+                else: # monster just hit you
+                    if room == outside and random.randint(1,100) > 25:
+                        print ("the blow knocks you back and you fall back in the dungeon")
+                        change_room (dungeon)
             return
     print("nothing to kill here")
 souls = {
@@ -79,7 +80,8 @@ dungeon = {
     ]
 }
 fred = {
-    "name": "fred",
+    "article": "",
+    "name": "you",
     "hp": 120,
     "power": 100,
     "inventory": []
@@ -91,7 +93,12 @@ outside = {
     },
     "description": "you are now in a forest",
     "inventory": [
-        { "name": "scary monster", "hp": 120, "power": 100 }
+        {
+            "name": "scary monster",
+            "article": "the ",
+            "hp": 120,
+            "power": 100
+        }
     ]
 }
 
