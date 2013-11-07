@@ -24,14 +24,24 @@ def search_inventory (thing, name) :
     return None
 def climb (words) :
     global room
-    print("you climbed out of the dungeon")
-    change_room (outside)
+    if search_inventory (room, "ladder") != None :
+        if room is dungeon :
+            print("you climbed out of the dungeon")
+            change_room (outside)
+        else:
+            print("you climb the ladder and have a look around")
+    else:
+        if search_inventory(fred, "ladder") != None :
+            print("you can't climb a ladder while you're holding it")
+        else:
+            print("theres nothing to climb here")
+            
 def swing (attacker, defender) :
     if random.randint(1,100) > 30:
-        if search_inventory (attacker, "sword") is None:
-            max_damage = attacker ["power"]
-        else: # found sword
+        if search_inventory (attacker, "sword") != None:
             max_damage = attacker ["power"] + 70
+        else: # found sword
+            max_damage = attacker ["power"]
         dam = random.randint(max_damage /2, max_damage)
         defender["hp"] = defender["hp"] - dam
         print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
