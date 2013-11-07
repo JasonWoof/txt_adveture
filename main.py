@@ -8,20 +8,31 @@ def esc(words) :
     global room
     print("you escaped the dungeon you get 50 points")
     change_room (outside)
+def help_command (words) :
+    print ("start your command with a verb get, kill, jump, climb.")
+    print ("examples: \"kill rats\", \"climb rope\"")
 def change_room (dest) :
     global room
     room = dest
     if "on_enter" in room :
         room["on_enter"]()
-def attack(words) :
-    print("you do some damage")
+def search_inventory (thing, name) :
+    if "inventory" in thing :
+        for idx,item in enumerate (thing["inventory"]) :
+            if item["name"] == name :
+                return idx
+    return None
 def climb (words) :
     global room
     print("you climbed out of the dungeon")
     change_room (outside)
 def swing (attacker, defender) :
-    if 70 < random.randint (1,100):
-        dam = random.randint(attacker ["power"] /2, attacker ["power"])
+    if random.randint(1,100) > 30:
+        if search_inventory (attacker, "sword") is None:
+            max_damage = attacker ["power"]
+        else: # found sword
+            max_damage = attacker ["power"] + 70
+        dam = random.randint(max_damage /2, max_damage)
         defender["hp"] = defender["hp"] - dam
         print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
         if defender["hp"] < 1 :
@@ -41,6 +52,7 @@ def get (words) :
             else:
                 fred ["inventory"].append(item)
                 del room["inventory"] [idx]
+                print ("you picked up the {0}".format(item["name"]))
                 return 
 def enter_dungeon () :
     dungeon ["inventory"].append ({ "name": "rats","article": "the ", "hp": 50, "power": 50})
@@ -64,8 +76,12 @@ souls = {
 }
 commands = {
     "kill": kill,
+    "attack": kill,
     "get": get,
-    "take": get
+    "take": get,
+    "help": help_command,
+    "?": help_command,
+    "": help_command
 }
 
 dungeon = {
@@ -74,23 +90,22 @@ dungeon = {
         "climb": climb
     },
     "on_enter": enter_dungeon,
-    "description": "you are in a dungeon you have a broadsword a dirk and some armor what do you do",
+    "description": "you are in a dungeon.",
     "inventory": [
         { "name": "ladder" },
-        { "name": "rusty old sword"}
+        { "name": "sword"}
     ]
 }
 fred = {
     "article": "",
     "name": "you",
     "hp": 120,
-    "power": 100,
+    "power": 40,
     "inventory": []
 }
 
 outside = {
     "commands": {
-        "attack": attack
     },
     "description": "you are now in a forest",
     "inventory": [
@@ -116,6 +131,11 @@ sass = [
     "That ain't right!"
 ]
 
+print("this text game was built at northstar\n")
+
+help_command([])
+print ()
+
 while True:
     print()
     print(room["description"])
@@ -127,6 +147,7 @@ while True:
     for item in fred["inventory"] :
         stuff.append(item["name"])
     print("you have: " + ", ".join(stuff))
+    print ("type a command and press enter")
     command = sys.stdin.readline().strip()
     words = command.split(' ')
     verb = words[0]
