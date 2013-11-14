@@ -3,6 +3,22 @@ import random
 
 room = {}
 word = "yes"
+def sign (lines):
+    longest = 0
+    for line in lines:
+        if len(line)> longest:
+                longest = len(line)
+    width = longest +6
+    hight = 4 + len(lines)
+    for x in range(0, hight):
+        if x == 0 or x == hight - 1:
+            print ("#"*width)
+        elif x == 1 or x == hight - 2:
+            spaces = width - 2
+            print ("#" + (" " * spaces) + "#")
+        else:
+            spaces = longest - len(lines[x - 2])
+            print ("#  " + lines[x - 2] + (" " * spaces) + "  #")
 
 def esc(words) :
     global room
@@ -72,8 +88,11 @@ def kill(words) :
             swing(fred, item)
             if "hp" in item: #if he's still alive
                 swing(item, fred)
-                if fred["hp"] < 1 :
-                    print("you die")
+                if not "hp" in fred:
+                    print("you die.")
+                    sign (["      R.I.P.",
+                           "    1990-2013 ",
+                           "Fred F. McFredricson"])
                     exit ()
                 else: # monster just hit you
                     if room == outside and random.randint(1,100) > 25:
