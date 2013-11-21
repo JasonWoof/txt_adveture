@@ -1,8 +1,25 @@
 import sys 
 import random
+import math
 
 room = {}
 word = "yes"
+
+def hp_bar (current,full):
+    out = "hp: ["
+    stars = math.ceil(current/4.0)
+    spaces = math.ceil(full /4.0)
+    spaces -= stars
+    out += "*" * stars
+    out += " " * spaces
+    out += "]"
+    print (out)
+def print_inventory (label,container):
+    stuff = []
+    for item in container["inventory"] :
+        stuff.append(item["name"])
+    print(label + ": " + ", ".join(stuff))
+
 def sign (lines):
     longest = 0
     for line in lines:
@@ -168,14 +185,9 @@ print ()
 while True:
     print()
     print(room["description"])
-    stuff = []
-    for item in room["inventory"] :
-        stuff.append(item["name"])
-    print("things you see here: " + ", ".join(stuff))
-    stuff = []
-    for item in fred["inventory"] :
-        stuff.append(item["name"])
-    print("you have: " + ", ".join(stuff))
+    print_inventory ("things you see here",room)
+    hp_bar (fred["hp"],120)
+    print_inventory ("inventory",fred)
     print ("type a command and press enter")
     command = sys.stdin.readline().strip()
     words = command.split(' ')
