@@ -39,11 +39,11 @@ def sign (lines):
 
 def esc(words) :
     global room
-    print("you escaped the dungeon you get 50 points")
+    print("Fred escaped the dungeon you get 50 points")
     change_room (outside)
 def help_command (words) :
     print ("start your command with a verb get, kill, jump, climb.")
-    print ("examples: \"kill rats\", \"climb rope\"")
+    print ("examples: \"kill rat\", \"climb rope\"")
 def change_room (dest) :
     global room
     room = dest
@@ -59,13 +59,13 @@ def climb (words) :
     global room
     if search_inventory (room, "ladder") != None :
         if room is dungeon :
-            print("you climbed out of the dungeon")
+            print("Fred climbed out of the dungeon")
             change_room (outside)
         else:
-            print("you climb the ladder and have a look around")
+            print("Fred climbed the ladder and has a look around")
     else:
         if search_inventory(fred, "ladder") != None :
-            print("you can't climb a ladder while you're holding it")
+            print("Fred can't climb a ladder while he's holding it")
         else:
             print("theres nothing to climb here")
             
@@ -81,7 +81,7 @@ def swing (attacker, defender) :
         if defender["hp"] < 1 :
             print("the {0} dies".format (defender ["name"]))
             del defender["hp"]
-            defender["name"] = "corpse of " + defender["name"]
+            defender["name"] = "corpse of " + defender["article"] + defender["name"]
     else:
         print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
 def get (words) :
@@ -95,10 +95,10 @@ def get (words) :
             else:
                 fred ["inventory"].append(item)
                 del room["inventory"] [idx]
-                print ("you picked up the {0}".format(item["name"]))
+                print ("Fred picked up the {0}".format(item["name"]))
                 return 
 def enter_dungeon () :
-    dungeon ["inventory"].append ({ "name": "rats","article": "the ", "hp": 50, "power": 50})
+    dungeon ["inventory"].append ({ "name": "rat","article": "the ", "hp": 50, "power": 50})
 def kill(words) :
     for item in room["inventory"] :
         if "hp" in item :
@@ -106,19 +106,19 @@ def kill(words) :
             if "hp" in item: #if he's still alive
                 swing(item, fred)
                 if not "hp" in fred:
-                    print("you die.")
+                    print("fred died.")
                     sign (["      R.I.P.",
                            "    1990-2013 ",
                            "Fred F. McFredricson"])
                     exit ()
                 else: # monster just hit you
                     if room == outside and random.randint(1,100) > 25:
-                        print ("the blow knocks you back and you fall back in the dungeon")
+                        print ("the blow knocks fred back and fred falls back in the dungeon")
                         change_room (dungeon)
             return
     print("nothing to kill here")
 souls = {
-    "jump": "you jumped " + str(random.randint(6,20)) + " inches"
+    "jump": "fred jumped " + str(random.randint(6,20)) + " inches"
 }
 commands = {
     "kill": kill,
@@ -136,7 +136,7 @@ dungeon = {
         "climb": climb
     },
     "on_enter": enter_dungeon,
-    "description": "you are in a dungeon.",
+    "description": "Fred is in a dungeon.",
     "inventory": [
         { "name": "ladder" },
         { "name": "sword"}
@@ -144,7 +144,7 @@ dungeon = {
 }
 fred = {
     "article": "",
-    "name": "you",
+    "name": "Fred",
     "hp": 120,
     "power": 40,
     "inventory": []
@@ -153,7 +153,7 @@ fred = {
 outside = {
     "commands": {
     },
-    "description": "you are now in a forest",
+    "description": "fred is now in a forest",
     "inventory": [
         {
             "name": "scary monster",
@@ -185,7 +185,7 @@ print ()
 while True:
     print()
     print(room["description"])
-    print_inventory ("things you see here",room)
+    print_inventory ("things Fred sees here",room)
     hp_bar (fred["hp"],120)
     print_inventory ("inventory",fred)
     print ("type a command and press enter")
