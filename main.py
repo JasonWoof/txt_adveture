@@ -49,8 +49,8 @@ def esc(words) :
     slow_print("Fred escaped the dungeon you get 50 points")
     change_room (outside)
 def help_command (words) :
-    print ("start your command with a verb get, kill, jump, climb.")
-    print ("examples: \"kill rat\", \"climb rope\"")
+    slow_print ("start your command with a verb get, kill, jump, climb.")
+    slow_print ("examples: \"kill rat\", \"climb rope\"")
 def change_room (dest) :
     global room
     room = dest
