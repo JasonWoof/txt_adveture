@@ -99,11 +99,13 @@ def get (words) :
             if "hp" in item :
                 slow_print ("the {0} does not want to be picked up".format(item["name"]) )
                 swing (item, fred)
+                return
             else:
                 fred ["inventory"].append(item)
                 del room["inventory"] [idx]
                 slow_print ("Fred picked up the {0}".format(item["name"]))
-                return 
+                return
+    slow_print ("there is no {0} here".format(thing))
 def enter_dungeon () :
     dungeon ["inventory"].append ({ "name": "rat","article": "the ", "hp": 50, "power": 50})
 def kill(words) :
@@ -209,7 +211,7 @@ while True:
     else:
         s = sass[random.randint(0, len(sass) - 1)]
         s = s.format (command)
-        print(command + "? " + s)
+        slow_print(command + "? " + s)
 
 # print random.random()
 
