@@ -3,8 +3,8 @@ import math
 
 def hp_bar (current,full):
     out = "hp: ["
-    stars = math.ceil(current/4.0)
-    spaces = math.ceil(full /4.0)
+    stars = int(math.ceil(current/4.0))
+    spaces = int(math.ceil(full /4.0))
     spaces -= stars
     out += "*" * stars
     out += " " * spaces
