@@ -1,10 +1,17 @@
 import sys 
 import random
 import math
+import time
 
 room = {}
 word = "yes"
 
+def slow_print (text):
+    for c in text:
+        sys.stdout.write (c)
+        time.sleep (.02)
+    print('')
+    time.sleep (.5)
 def hp_bar (current,full):
     out = "hp: ["
     stars = int(math.ceil(current/4.0))
@@ -29,17 +36,17 @@ def sign (lines):
     hight = 4 + len(lines)
     for x in range(0, hight):
         if x == 0 or x == hight - 1:
-            print ("#"*width)
+            slow_print ("#"*width)
         elif x == 1 or x == hight - 2:
             spaces = width - 2
-            print ("#" + (" " * spaces) + "#")
+            slow_print ("#" + (" " * spaces) + "#")
         else:
             spaces = longest - len(lines[x - 2])
-            print ("#  " + lines[x - 2] + (" " * spaces) + "  #")
+            slow_print ("#  " + lines[x - 2] + (" " * spaces) + "  #")
 
 def esc(words) :
     global room
-    print("Fred escaped the dungeon you get 50 points")
+    slow_print("Fred escaped the dungeon you get 50 points")
     change_room (outside)
 def help_command (words) :
     print ("start your command with a verb get, kill, jump, climb.")
@@ -59,15 +66,15 @@ def climb (words) :
     global room
     if search_inventory (room, "ladder") != None :
         if room is dungeon :
-            print("Fred climbed out of the dungeon")
+            slow_print("Fred climbed out of the dungeon")
             change_room (outside)
         else:
-            print("Fred climbed the ladder and has a look around")
+            slow_print("Fred climbed the ladder and has a look around")
     else:
         if search_inventory(fred, "ladder") != None :
-            print("Fred can't climb a ladder while he's holding it")
+            slow_print("Fred can't climb a ladder while he's holding it")
         else:
-            print("theres nothing to climb here")
+            slow_print("theres nothing to climb here")
             
 def swing (attacker, defender) :
     if random.randint(1,100) > 30:
@@ -77,25 +84,25 @@ def swing (attacker, defender) :
             max_damage = attacker ["power"]
         dam = random.randint(max_damage /2, max_damage)
         defender["hp"] = defender["hp"] - dam
-        print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
+        slow_print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
         if defender["hp"] < 1 :
-            print("the {0} dies".format (defender ["name"]))
+            slow_print("the {0} dies".format (defender ["name"]))
             del defender["hp"]
             defender["name"] = "corpse of " + defender["article"] + defender["name"]
     else:
-        print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
+        slow_print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
 def get (words) :
     words.pop(0)
     thing = " ".join(words)
     for idx,item in enumerate (room["inventory"]) :
         if thing == item["name"] :
             if "hp" in item :
-                print ("the {0} does not want to be picked up".format(item["name"]) )
+                slow_print ("the {0} does not want to be picked up".format(item["name"]) )
                 swing (item, fred)
             else:
                 fred ["inventory"].append(item)
                 del room["inventory"] [idx]
-                print ("Fred picked up the {0}".format(item["name"]))
+                slow_print ("Fred picked up the {0}".format(item["name"]))
                 return 
 def enter_dungeon () :
     dungeon ["inventory"].append ({ "name": "rat","article": "the ", "hp": 50, "power": 50})
@@ -106,17 +113,17 @@ def kill(words) :
             if "hp" in item: #if he's still alive
                 swing(item, fred)
                 if not "hp" in fred:
-                    print("fred died.")
+                    slow_print("fred died.")
                     sign (["      R.I.P.",
                            "    1990-2013 ",
                            "Fred F. McFredricson"])
                     exit ()
                 else: # monster just hit you
                     if room == outside and random.randint(1,100) > 25:
-                        print ("the blow knocks fred back and fred falls back in the dungeon")
+                        slow_print ("the blow knocks fred back and fred falls back in the dungeon")
                         change_room (dungeon)
             return
-    print("nothing to kill here")
+    slow_print("nothing to kill here")
 souls = {
     "jump": "fred jumped " + str(random.randint(6,20)) + " inches"
 }
@@ -177,12 +184,13 @@ sass = [
     "That ain't right!"
 ]
 
-print("this text game was built at northstar\n")
+slow_print("this text game was built at northstar\n")
 
 help_command([])
 print ('')
 
 while True:
+    time.sleep (.5)
     print('')
     print(room["description"])
     print_inventory ("things Fred sees here",room)
