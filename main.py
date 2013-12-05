@@ -7,8 +7,8 @@ word = "yes"
 
 def hp_bar (current,full):
     out = "hp: ["
-    stars = math.ceil(current/4.0)
-    spaces = math.ceil(full /4.0)
+    stars = int(math.ceil(current/4.0))
+    spaces = int(math.ceil(full /4.0))
     spaces -= stars
     out += "*" * stars
     out += " " * spaces
@@ -180,10 +180,10 @@ sass = [
 print("this text game was built at northstar\n")
 
 help_command([])
-print ()
+print ('')
 
 while True:
-    print()
+    print('')
     print(room["description"])
     print_inventory ("things you see here",room)
     hp_bar (fred["hp"],120)
