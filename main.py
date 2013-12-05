@@ -9,9 +9,18 @@ word = "yes"
 def slow_print (text):
     for c in text:
         sys.stdout.write (c)
+        sys.stdout.flush ()
         time.sleep (.02)
     print('')
     time.sleep (.5)
+def uwin ():
+    slow_print ("you win")
+    time.sleep(4)
+    exit ()
+def maybewin ():
+    if not ("hp" in monster):
+        uwin ()
+    
 def hp_bar (current,full):
     out = "hp: ["
     stars = int(math.ceil(current/4.0))
@@ -119,6 +128,7 @@ def kill(words) :
                     sign (["      R.I.P.",
                            "    1990-2013 ",
                            "Fred F. McFredricson"])
+                    time.sleep(4)
                     exit ()
                 else: # monster just hit you
                     if room == outside and random.randint(1,100) > 25:
@@ -158,18 +168,20 @@ fred = {
     "power": 40,
     "inventory": []
 }
+monster = {
+    "name": "scary monster",
+    "article": "the ",
+    "hp": 120,
+    "power": 100
+}
 
 outside = {
     "commands": {
     },
     "description": "fred is now in a forest",
     "inventory": [
-        {
-            "name": "scary monster",
-            "article": "the ",
-            "hp": 120,
-            "power": 100
-        }
+        monster
+
     ]
 }
 
@@ -213,5 +225,6 @@ while True:
         s = s.format (command)
         slow_print(command + "? " + s)
 
+    maybewin ()
 # print random.random()
 
