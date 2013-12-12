@@ -93,9 +93,9 @@ def swing (attacker, defender) :
             max_damage = attacker ["power"]
         dam = random.randint(max_damage /2, max_damage)
         defender["hp"] = defender["hp"] - dam
-        slow_print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
+        slow_print("{0}{1} hit {2}{3} for {4} hp".format(attacker["article"], attacker["name"], defender["article"], defender["name"], dam))
         if defender["hp"] < 1 :
-            slow_print("the {0} dies".format(defender ["name"]))
+            slow_print("{0}{1} dies".format(defender["article"], defender["name"]))
             del defender["hp"]
             defender["name"] = "corpse of " + defender["article"] + defender["name"]
     else:
@@ -124,7 +124,6 @@ def kill(words) :
             if "hp" in item: #if he's still alive
                 swing(item, fred)
                 if not "hp" in fred:
-                    slow_print("fred died.")
                     sign(["      R.I.P.",
                           "    1990-2013 ",
                           "Fred F. McFredricson"])
