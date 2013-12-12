@@ -14,7 +14,7 @@ def slow_print (text):
     print('')
     time.sleep (.5)
 def uwin ():
-    slow_print ("you win")
+    slow_print ("You win!")
     time.sleep(4)
     exit ()
 def maybewin ():
@@ -53,13 +53,13 @@ def sign (lines):
             spaces = longest - len(lines[x - 2])
             slow_print ("#  " + lines[x - 2] + (" " * spaces) + "  #")
 
-def esc(words) :
+def esc (words) :
     global room
     slow_print("Fred escaped the dungeon you get 50 points")
-    change_room (outside)
+    change_room(outside)
 def help_command (words) :
-    slow_print ("start your command with a verb get, kill, jump, climb.")
-    slow_print ("examples: \"kill rat\", \"climb rope\"")
+    slow_print("Start your command with a verb, like: get, kill, jump or climb.")
+    slow_print("Examples: \"kill rat\", \"climb rope\"")
 def change_room (dest) :
     global room
     room = dest
@@ -75,15 +75,15 @@ def climb (words) :
     global room
     if search_inventory (room, "ladder") != None :
         if room is dungeon :
-            slow_print("Fred climbed out of the dungeon")
+            slow_print("Fred climbed out of the dungeon.")
             change_room (outside)
         else:
-            slow_print("Fred climbed the ladder and has a look around")
+            slow_print("Fred climbed the ladder and has a look around.")
     else:
         if search_inventory(fred, "ladder") != None :
-            slow_print("Fred can't climb a ladder while he's holding it")
+            slow_print("Fred can't climb a ladder while he's holding it.")
         else:
-            slow_print("theres nothing to climb here")
+            slow_print("Theres nothing to climb here.")
             
 def swing (attacker, defender) :
     if random.randint(1,100) > 30:
@@ -95,28 +95,28 @@ def swing (attacker, defender) :
         defender["hp"] = defender["hp"] - dam
         slow_print("{0} hit {1}{2} for {3} hp".format(attacker["name"], defender["article"], defender["name"], dam))
         if defender["hp"] < 1 :
-            slow_print("the {0} dies".format (defender ["name"]))
+            slow_print("the {0} dies".format(defender ["name"]))
             del defender["hp"]
             defender["name"] = "corpse of " + defender["article"] + defender["name"]
     else:
-        slow_print ("{0}{1} tries to hit {2}{3} and misses".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
+        slow_print ("{0}{1} tries to hit {2}{3} and misses.".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
 def get (words) :
     words.pop(0)
     thing = " ".join(words)
     for idx,item in enumerate (room["inventory"]) :
         if thing == item["name"] :
             if "hp" in item :
-                slow_print ("the {0} does not want to be picked up".format(item["name"]) )
-                swing (item, fred)
+                slow_print("The {0} does not want to be picked up.".format(item["name"]))
+                swing(item, fred)
                 return
             else:
-                fred ["inventory"].append(item)
+                fred["inventory"].append(item)
                 del room["inventory"] [idx]
-                slow_print ("Fred picked up the {0}".format(item["name"]))
+                slow_print("Fred picked up the {0}.".format(item["name"]))
                 return
-    slow_print ("there is no {0} here".format(thing))
+    slow_print("there is no {0} here".format(thing))
 def enter_dungeon () :
-    dungeon ["inventory"].append ({ "name": "rat","article": "the ", "hp": 50, "power": 50})
+    dungeon ["inventory"].append({ "name": "rat", "article": "the ", "hp": 50, "power": 50})
 def kill(words) :
     for item in room["inventory"] :
         if "hp" in item :
@@ -125,19 +125,19 @@ def kill(words) :
                 swing(item, fred)
                 if not "hp" in fred:
                     slow_print("fred died.")
-                    sign (["      R.I.P.",
-                           "    1990-2013 ",
-                           "Fred F. McFredricson"])
+                    sign(["      R.I.P.",
+                          "    1990-2013 ",
+                          "Fred F. McFredricson"])
                     time.sleep(4)
-                    exit ()
+                    exit()
                 else: # monster just hit you
                     if room == outside and random.randint(1,100) > 25:
-                        slow_print ("the blow knocks fred back and fred falls back in the dungeon")
-                        change_room (dungeon)
+                        slow_print("The blow knocks fred back and fred falls back in the dungeon.")
+                        change_room(dungeon)
             return
     slow_print("nothing to kill here")
 souls = {
-    "jump": "fred jumped " + str(random.randint(6,20)) + " inches"
+    "jump": "Fred jumped " + str(random.randint(6,20)) + " inches."
 }
 commands = {
     "kill": kill,
@@ -178,7 +178,7 @@ monster = {
 outside = {
     "commands": {
     },
-    "description": "fred is now in a forest",
+    "description": "Fred is now in a forest",
     "inventory": [
         monster
 
@@ -198,19 +198,19 @@ sass = [
     "That ain't right!"
 ]
 
-slow_print("this text game was built at northstar\n")
+slow_print("This text game was built at Northstar.\n")
 
 help_command([])
-print ('')
+print('')
 
 while True:
     time.sleep (.5)
     print('')
     print(room["description"])
-    print_inventory ("things Fred sees here",room)
+    print_inventory("Things Fred sees here",room)
     hp_bar (fred["hp"],120)
-    print_inventory ("inventory",fred)
-    print ("type a command and press enter")
+    print_inventory("Inventory",fred)
+    sys.stdout.write("Type a command and press enter: ")
     command = sys.stdin.readline().strip()
     words = command.split(' ')
     verb = words[0]
@@ -222,9 +222,9 @@ while True:
         print(souls[verb])
     else:
         s = sass[random.randint(0, len(sass) - 1)]
-        s = s.format (command)
+        s = s.format(command)
         slow_print(command + "? " + s)
 
-    maybewin ()
+    maybewin()
 # print random.random()
 
