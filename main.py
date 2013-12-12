@@ -58,7 +58,8 @@ def esc (words) :
     slow_print("Fred escaped the dungeon you get 50 points")
     change_room(outside)
 def help_command (words) :
-    slow_print("Start your command with a verb, like: get, kill, jump or climb.")
+    slow_print("This is a text-adventure game. You direct Fred by typing commands.\n")
+    slow_print("Start your command with a verb, like: \"get\", \"kill\", \"jump\" or \"climb\".")
     slow_print("Examples: \"kill rat\", \"climb rope\"")
 def change_room (dest) :
     global room
@@ -93,13 +94,13 @@ def swing (attacker, defender) :
             max_damage = attacker ["power"]
         dam = random.randint(max_damage /2, max_damage)
         defender["hp"] = defender["hp"] - dam
-        slow_print("{0}{1} hit {2}{3} for {4} hp".format(attacker["article"], attacker["name"], defender["article"], defender["name"], dam))
+        slow_print("{0}{1} hit {2}{3} for {4} hp.".format(attacker["article"].capitalize(), attacker["name"], defender["article"], defender["name"], dam))
         if defender["hp"] < 1 :
-            slow_print("{0}{1} dies".format(defender["article"], defender["name"]))
+            slow_print("{0}{1} dies.".format(defender["article"].capitalize(), defender["name"]))
             del defender["hp"]
             defender["name"] = "corpse of " + defender["article"] + defender["name"]
     else:
-        slow_print ("{0}{1} tries to hit {2}{3} and misses.".format(attacker["article"], attacker["name"], defender["article"], defender["name"]))
+        slow_print ("{0}{1} tries to hit {2}{3} and misses.".format(attacker["article"].capitalize(), attacker["name"], defender["article"], defender["name"]))
 def get (words) :
     words.pop(0)
     thing = " ".join(words)
@@ -197,7 +198,7 @@ sass = [
     "That ain't right!"
 ]
 
-slow_print("This text game was built at Northstar.\n")
+slow_print("Built at Northstar!\n")
 
 help_command([])
 print('')
